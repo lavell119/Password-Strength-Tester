@@ -1,0 +1,28 @@
+*::before, *::after, * {
+  box-sizing: border-box;        
+}
+
+body {
+  background-color: hsl(261, 88%, 17%);
+  color: hsl(261, 88%, 90%);
+  text-align: center;
+}
+
+.strength-meter {
+  position: relative;
+  height: 2rem;
+  width: 90%;
+  border: 3px solid hsl(261, 88%, 57%);
+  border-radius: 1rem;
+  margin: 0 auto; 
+  overflow: hidden;
+}
+
+.strength-meter::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 10%;
+  background-color: hsl(261, 88%, 67%);
+}
