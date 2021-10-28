@@ -1,12 +1,23 @@
 const strengthMeter = document.getElementById('strength-meter')
 const passwordInput = document.getElementById('password-input')
-const reasonContainer = document.getElementById('reasons')
+const reasonsContainer = document.getElementById('reasons')
 
-passwordInput.addEventListener('input', () => {
-    const weaknesses = calculatePasswordStrength
-    (passwordInput.value)
-    console.log(weaknesses)
-})
+passwordInput.addEventListener('input', updateStrengthMeter)
+updateStrengthMeter()
+
+function updateStrengthMeter() {
+  const weaknesses = calculatePasswordStrength(passwordInput.value) 
+  let strength = 100
+  reasonsContainer.innerHTML = ''
+  weaknesses.forEach(weakness => {
+    if (weakness == null) return
+    strength -= weakness.deduction
+    const messageElement = document.createElement('div')
+    messageElement.innerText = weakness.message
+    reasonsContainer.appendChild(messageElement)
+  })           
+  strengthMeter.style.setProperty('--strength', strength)                                                                                                                                                                                                                            
+}                                                               
 
 function calculatePasswordStrength(password) {
     const weaknesses = []
@@ -14,7 +25,7 @@ function calculatePasswordStrength(password) {
     return weaknesses
 }
 
-function lengthWeakness(password) {
+function lengthWeakness(password) {                                                                                                 
     const length = password.length
 
     if (length <= 5) {
