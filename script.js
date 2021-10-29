@@ -24,10 +24,12 @@ function calculatePasswordStrength(password) {
     weaknesses.push(lengthWeakness(password))
     weaknesses.push(lowercaseWeakness(password))
     weaknesses.push(uppercaseWeakness(password))
+    weaknesses.push(numberWeakness(password))
+    weaknesses.push(specialCharacterWeakness(password))
     return weaknesses
 }
 
-function lengthWeakness(password) {                                                                                                 
+function lengthWeakness(password) {                                                       
     const length = password.length
 
     if (length <= 5) {
@@ -53,6 +55,10 @@ function lowercaseWeakness(password) {
     return characterTypeWeakness(password, /[a-z]/g, 'lowercase characters')  
 }
 
+function numberWeakness(password) {
+    return characterTypeWeakness(password, /[0-9]/g, 'numbers')  
+}
+
 function characterTypeWeakness(password, regex, type) {
     const matches = password.match(regex) || []
 
@@ -70,4 +76,8 @@ function characterTypeWeakness(password, regex, type) {
         }
     }
     
+}
+
+function specialCharacterWeakness(password) {
+    return characterTypeWeakness(password, /[^0-9a-zA-Z/s]/g, 'special characters')  
 }
